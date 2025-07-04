@@ -1,0 +1,227 @@
+/* Stili Generali e per Desktop */
+:root {
+    --primary-bg: #393D3F;
+    --secondary-bg: #546A7B;
+    --accent-color: #62929E;
+    --text-color: #C6C5B9;
+    --light-text: #FFFFFF;
+    --error-color: #ff6b6b;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--primary-bg); 
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.app-content {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Nuova Barra degli Strumenti */
+#actions-toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    min-height: 40px;
+}
+
+.toolbar-btn {
+    background: none;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out;
+}
+.toolbar-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+.toolbar-btn i {
+    margin-right: 6px;
+}
+
+.game-container {
+    background-color: var(--secondary-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+/* Animazioni */
+.game-screen { display: none; }
+.game-screen.active { display: block; animation: fadeIn 0.5s ease-out forwards; }
+.game-screen.exiting { animation: fadeOut 0.3s ease-in forwards; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+.shrinking {
+    animation: shrink-out 0.5s ease-in-out forwards;
+}
+
+@keyframes shrink-out {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* Contenuto delle schermate */
+.screen-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+}
+
+.logo {
+    font-size: 5rem;
+    color: var(--accent-color);
+    margin-bottom: 30px;
+}
+
+.btn-mode {
+    width: 90%;
+    max-width: 300px;
+    margin-bottom: 15px;
+}
+
+.btn-mode.secondary {
+    margin-top: 20px;
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--text-color);
+}
+
+/* Elementi Comuni */
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.1rem; }
+h2, h3 {
+    color: var(--text-color);
+    margin-top: 0;
+    border-bottom: 1px solid var(--accent-color);
+    padding-bottom: 10px;
+}
+h3 { border: none; margin-top: 20px; margin-bottom: 10px; }
+
+#setup-rules {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+}
+input::placeholder { color: #9a9a9a; }
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--accent-color);
+    color: var(--light-text);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+}
+button i { margin-right: 8px; }
+button:hover { filter: brightness(1.1); }
+button:active { transform: scale(0.98); }
+
+.secondary-btn {
+    background-color: var(--text-color);
+    color: var(--primary-bg);
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    margin-top: 20px;
+}
+
+/* Stili Schermata di Gioco */
+#game-status {
+    background-color: var(--primary-bg);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    border: 1px solid var(--accent-color);
+}
+.bounds { font-weight: bold; display: flex; justify-content: space-around; align-items: center; margin-top: 10px; }
+.bounds span { background-color: var(--secondary-bg); padding: 5px 10px; border-radius: 5px; }
+
+.guess-form { display: flex; gap: 10px; align-items: center; }
+.guess-form input { margin: 0; flex-grow: 1; }
+.guess-form button { flex-shrink: 0; }
+
+#guesses-list { list-style-type: none; padding: 0; text-align: left; margin-top: 20px; max-height: 150px; overflow-y: auto; }
+#guesses-list li { background-color: var(--primary-bg); padding: 10px; border-bottom: 1px solid var(--secondary-bg); display: flex; justify-content: space-between; animation: fadeInRow 0.4s ease-out forwards; }
+#guesses-list li:last-child { border-bottom: none; }
+
+.final-word { font-size: 2rem; font-weight: bold; color: var(--accent-color); padding: 20px; background-color: var(--primary-bg); border: 1px solid var(--accent-color); border-radius: 8px; word-break: break-all; }
+#game-over-lose-screen .final-word { color: var(--error-color); }
+
+/* Stili Modale Tutorial */
+.modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; animation: fadeIn 0.3s ease; padding: 15px; }
+.modal-overlay.show { display: flex; }
+.modal-content { background-color: var(--secondary-bg); color: var(--text-color); padding: 20px 30px; border-radius: 12px; width: 100%; max-width: 500px; position: relative; text-align: left; animation: popIn 0.3s ease-out; border: 1px solid var(--text-color); max-height: 85vh; overflow-y: auto; }
+.modal-content h2 { color: var(--light-text); }
+.modal-close { position: absolute; top: 10px; right: 15px; color: var(--text-color); font-size: 28px; font-weight: bold; cursor: pointer; }
+.tutorial-list { padding-left: 20px; }
+.tutorial-list li { margin-bottom: 15px; line-height: 1.5; }
+.tutorial-list li strong { color: var(--light-text); }
+.tutorial-heading { margin-top: 25px; border-top: 1px solid var(--accent-color); padding-top: 15px; }
+.difficulty-explanation { list-style-type: none; padding: 0; text-align: left; }
+.difficulty-explanation li { margin-bottom: 10px; }
+#close-tutorial-btn { margin-top: 25px; width: 100%; }
+
+/* Stili per Dispositivi Mobili (<= 600px) */
+@media (max-width:
