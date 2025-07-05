@@ -113,10 +113,13 @@ body {
     min-height: 250px;
 }
 
-.logo {
-    font-size: 5rem;
-    color: var(--accent-color);
+.logo-container {
     margin-bottom: 30px;
+}
+.logo-image {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
 }
 
 .btn-mode {
@@ -224,4 +227,11 @@ button:active { transform: scale(0.98); }
 #close-tutorial-btn { margin-top: 25px; width: 100%; }
 
 /* Stili per Dispositivi Mobili (<= 600px) */
-@media (max-width:
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    #actions-toolbar { margin: 15px 0 15px; }
+    .game-container { padding: 20px; }
+    h2 { font-size: 1.3rem; }
+    .final-word { font-size: 1.5rem; }
+    .modal-content { padding: 20px; }
+}
