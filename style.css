@@ -36,7 +36,7 @@ body {
     align-items: center;
 }
 
-/* Nuova Barra degli Strumenti */
+/* Barra degli Strumenti */
 #actions-toolbar {
     width: 100%;
     display: flex;
@@ -72,37 +72,24 @@ body {
     width: 100%;
     text-align: center;
     position: relative;
+    transition: background-color 0.5s, box-shadow 0.5s;
 }
 
-/* Animazioni */
-.game-screen { display: none; }
-.game-screen.active { display: block; animation: fadeIn 0.5s ease-out forwards; }
-.game-screen.exiting { animation: fadeOut 0.3s ease-in forwards; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Stile speciale per la home page */
+.game-container.is-home {
+    background-color: transparent;
+    box-shadow: none;
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-10px); }
+
+/* Gestione schermate */
+.game-screen { 
+    display: none; 
+}
+.game-screen.active { 
+    display: block; 
 }
 
-.shrinking {
-    animation: shrink-out 0.5s ease-in-out forwards;
-}
-
-@keyframes shrink-out {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
-    to {
-        transform: scale(0);
-        opacity: 0;
-    }
-}
 
 /* Contenuto delle schermate */
 .screen-content {
@@ -116,6 +103,7 @@ body {
 .logo-container {
     margin-bottom: 30px;
 }
+
 .logo-image {
     width: 100%;
     max-width: 350px;
@@ -206,16 +194,16 @@ button:active { transform: scale(0.98); }
 .guess-form button { flex-shrink: 0; }
 
 #guesses-list { list-style-type: none; padding: 0; text-align: left; margin-top: 20px; max-height: 150px; overflow-y: auto; }
-#guesses-list li { background-color: var(--primary-bg); padding: 10px; border-bottom: 1px solid var(--secondary-bg); display: flex; justify-content: space-between; animation: fadeInRow 0.4s ease-out forwards; }
+#guesses-list li { background-color: var(--primary-bg); padding: 10px; border-bottom: 1px solid var(--secondary-bg); display: flex; justify-content: space-between; }
 #guesses-list li:last-child { border-bottom: none; }
 
 .final-word { font-size: 2rem; font-weight: bold; color: var(--accent-color); padding: 20px; background-color: var(--primary-bg); border: 1px solid var(--accent-color); border-radius: 8px; word-break: break-all; }
 #game-over-lose-screen .final-word { color: var(--error-color); }
 
 /* Stili Modale Tutorial */
-.modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; animation: fadeIn 0.3s ease; padding: 15px; }
+.modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; padding: 15px; }
 .modal-overlay.show { display: flex; }
-.modal-content { background-color: var(--secondary-bg); color: var(--text-color); padding: 20px 30px; border-radius: 12px; width: 100%; max-width: 500px; position: relative; text-align: left; animation: popIn 0.3s ease-out; border: 1px solid var(--text-color); max-height: 85vh; overflow-y: auto; }
+.modal-content { background-color: var(--secondary-bg); color: var(--text-color); padding: 20px 30px; border-radius: 12px; width: 100%; max-width: 500px; position: relative; text-align: left; border: 1px solid var(--text-color); max-height: 85vh; overflow-y: auto; }
 .modal-content h2 { color: var(--light-text); }
 .modal-close { position: absolute; top: 10px; right: 15px; color: var(--text-color); font-size: 28px; font-weight: bold; cursor: pointer; }
 .tutorial-list { padding-left: 20px; }

@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Contenitore principale
+    const gameContainer = document.querySelector('.game-container');
+
     // Schermate
     const screens = {
         home: document.getElementById('home-screen'),
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toolbarBackBtn = document.getElementById('toolbar-back-btn');
     const toolbarSurrenderBtn = document.getElementById('toolbar-surrender-btn');
 
-    // Elementi di gioco
+    // Elementi di gioco e altri
     const setupRulesEl = document.getElementById('setup-rules');
     const secretWordInput = document.getElementById('secret-word-input');
     const startGameBtn = document.getElementById('start-game-btn');
@@ -33,67 +36,71 @@ document.addEventListener('DOMContentLoaded', () => {
     const lowerBoundEl = document.getElementById('lower-bound');
     const upperBoundEl = document.getElementById('upper-bound');
     const showWordBtn = document.getElementById('show-word-btn');
-
-    // Elementi Fine Gioco
     const finalWordWinEl = document.getElementById('final-word-win');
     const finalWordLoseEl = document.getElementById('final-word-lose');
     const newGameWinBtn = document.getElementById('new-game-win-btn');
     const newGameLoseBtn = document.getElementById('new-game-lose-btn');
-
-    // Modale
     const helpModal = document.getElementById('help-modal');
     const closeModalBtn = document.getElementById('modal-close-btn');
     const closeTutorialBtn = document.getElementById('close-tutorial-btn');
 
-    const wordList = ["ALBERO", "AMICO", "BANANA", "CASA", "CANE", "FIORE", "GATTO", "LIBRO", "LUNA", "MARE", "NEVE", "PANE", "PESCE", "PORTA", "SOLE", "STELLE", "TEMPO", "TERRA", "TRENO", "UOMO", "VENTO", "ZAINO", "SCUOLA", "MONTAGNA", "SALE", "RE", "BLU"];
+    const wordList = [
+        // Parole Corte (Principiante)
+        "RE", "BLU", "THE", "SCI", "GAS", "GEL", "GIA", "SUA", "MIA", "NEI", "TRE",
+        "CASA", "CANE", "GATTO", "MANO", "PANE", "SALE", "SOLE", "LUNA", "MARE", "NEVE", 
+        "NASO", "NIDO", "MUSO", "RETE", "RISO", "UVA", "UOMO", "DONNA", "FUOCO", "FUMO",
+        "GIOCO", "GARA", "FILO", "DITO", "DADO", "CUBO", "CAVO", "ARCO", "ARTE", "ANNO", 
+        "MELA", "PERA", "FICO", "FAME", "SETE", "NOME", "FOTO", "VIDEO", "TEST", "QUIZ", 
+
+        // Parole Medie (Intermedio)
+        "LIBRO", "FIORE", "VENTO", "TRENO", "PORTA", "PESCE", "TEMPO", "TERRA", "AMICO",
+        "FORNO", "RADIO", "PIZZA", "PASTA", "PRATO", "PONTE", "PARCO", "PIEDE", "SALTO",
+        "SCALA", "SEDIA", "TAVOLO", "TETTO", "TORRE", "VETRO", "VOLPE", "ZEBRA",
+        "ALBERO", "BANANA", "BARCA", "BOSCO", "CAMPO", "CARTA", "CUORE", "FESTA",
+        "FORTE", "FRIGO", "GABBIA", "MAGLIA", "MUSICA", "NUVOLA", "OCCHI", "PIANTA", 
+        "SABBIA", "SCARPA", "SCUOLA", "STRADA", "TEATRO", "UOVO",
+
+        // Parole Lunghe (Esperto)
+        "ZAINO", "ZUCCHERO", "AEREO", "ANELLO", "ANGURIA", "ANIMALE", "ARMADIO",
+        "BAMBOLA", "BATTITO", "BOTTIGLIA", "BRACCIO", "CACCIA", "CALCIO", "CAMERA",
+        "CANDELA", "CAPELLI", "CASTELLO", "CERVELLO", "CHIAVE", "CHITARRA", "CIELO",
+        "CUCINA", "CUSCINO", "DIAMANTE", "FINESTRA", "FOGLIA", "FORMICA", "FRATELLO",
+    
+        "GIARDINO", "GIORNALE", "LAVAGNA", "LUCERTOLA", "MACCHINA", "MAGAZZINO",
+        "MAPPAMONDO", "MEDICINA", "MONTAGNA", "MOTORE", "MUSEO", "NEGOZIO",
+        "OSPEDALE", "OROLOGIO", "PALAZZO", "PANTERA", "PATATA", "PAVIMENTO",
+        "PENNARELLO", "PIANETA", "PIPISTRELLO", "PIRAMIDE", "PISTOLA", "POMODORO",
+        "QUADRO", "RAGNATELA", "REGALO", "SCATOLA", "SCRIVANIA", "SERPENTE",
+        "SPAZZOLA", "SPECCHIO", "SPIAGGIA", "STAZIONE", "TELEFONO", "TELEVISIONE",
+        "TEMPESTA", "TIGRE", "TRATTORE", "UNIVERSO", "VULCANO"
+    ];
     
     // Variabili di stato
     let secretWord = '';
     let lowerBound = 'A';
     let upperBound = 'Z';
     let isSinglePlayer = false;
-    let activeScreen = 'home';
+    let activeScreenKey = 'home';
     let difficultySettings = {};
-
-    // Funzione per animare i pulsanti prima di navigare
-    const animateAndNavigate = (button, navigationAction) => {
-        if (button.classList.contains('shrinking')) return;
-
-        button.classList.add('shrinking');
-        
-        setTimeout(() => {
-            navigationAction();
-        }, 500); // Attende la fine dell'animazione
-    };
     
     // Funzione per mostrare le schermate
     const showScreen = (screenKey) => {
-        const screenToShow = screens[screenKey];
-        if (!screenToShow) {
-            console.error("Schermata non trovata:", screenKey);
-            return;
-        }
-        
-        // Resetta i pulsanti sulla schermata che sta per apparire
-        screenToShow.querySelectorAll('button').forEach(btn => {
-            btn.classList.remove('shrinking');
-        });
-
-        const currentScreen = document.querySelector('.game-screen.active');
-        
-        activeScreen = screenKey;
-        updateToolbar();
-
-        if (currentScreen && currentScreen !== screenToShow) {
-            currentScreen.classList.add('exiting');
-            currentScreen.addEventListener('animationend', () => {
-                currentScreen.classList.remove('active', 'exiting');
-                screenToShow.classList.add('active');
-            }, { once: true });
+        // Applica o rimuove lo stile trasparente al contenitore
+        if (screenKey === 'home') {
+            gameContainer.classList.add('is-home');
         } else {
-            if(currentScreen) currentScreen.classList.remove('active');
-            screenToShow.classList.add('active');
+            gameContainer.classList.remove('is-home');
         }
+
+        // Nascondi tutte le schermate
+        for (const key in screens) {
+            screens[key].classList.remove('active');
+        }
+        // Mostra solo quella desiderata
+        screens[screenKey].classList.add('active');
+        
+        activeScreenKey = screenKey;
+        updateToolbar();
     };
 
     // Funzione per aggiornare la barra degli strumenti
@@ -101,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toolbarBackBtn.classList.remove('visible');
         toolbarSurrenderBtn.classList.remove('visible');
 
-        switch (activeScreen) {
+        switch (activeScreenKey) {
             case 'modeSelection':
             case 'difficulty':
             case 'setup':
@@ -110,18 +117,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
 
-        if (activeScreen === 'game' && isSinglePlayer) {
+        if (activeScreenKey === 'game' && isSinglePlayer) {
             toolbarSurrenderBtn.classList.add('visible');
         }
     };
     
     // --- NAVIGAZIONE ---
-    goToModeSelectionBtn.addEventListener('click', (e) => {
-        animateAndNavigate(e.currentTarget, () => showScreen('modeSelection'));
+    goToModeSelectionBtn.addEventListener('click', () => {
+        // **MODIFICA QUI: Aggiunto ritardo di 500ms (mezzo secondo)**
+        setTimeout(() => {
+            showScreen('modeSelection');
+        }, 500);
     });
     
     toolbarBackBtn.addEventListener('click', () => {
-        switch (activeScreen) {
+        switch (activeScreenKey) {
             case 'modeSelection': showScreen('home'); break;
             case 'difficulty': showScreen('modeSelection'); break;
             case 'setup':
@@ -129,46 +139,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const handleModeSelection = (e, isSingle) => {
-        animateAndNavigate(e.currentTarget, () => {
-            isSinglePlayer = isSingle;
-            showScreen('difficulty');
-        });
+    const handleModeSelection = (isSingle) => {
+        isSinglePlayer = isSingle;
+        showScreen('difficulty');
     };
 
-    singlePlayerBtn.addEventListener('click', (e) => handleModeSelection(e, true));
-    multiplayerBtn.addEventListener('click', (e) => handleModeSelection(e, false));
+    singlePlayerBtn.addEventListener('click', () => handleModeSelection(true));
+    multiplayerBtn.addEventListener('click', () => handleModeSelection(false));
 
-    const setDifficulty = (e, settings) => {
-        animateAndNavigate(e.currentTarget, () => {
-            difficultySettings = settings;
-            if (isSinglePlayer) {
-                const validWords = wordList.filter(word => word.length >= settings.min && word.length <= settings.max);
-                if (validWords.length === 0) {
-                    alert('Nessuna parola disponibile per questa difficoltà! Scegline un\'altra.');
-                    showScreen('difficulty');
-                    return;
-                }
-                secretWord = validWords[Math.floor(Math.random() * validWords.length)];
-                resetGame();
-                showWordBtn.style.display = 'none';
-                showScreen('game');
-            } else {
-                setupRulesEl.textContent = `Il Master deve inserire una parola da ${settings.min} a ${settings.max} lettere.`;
-                if (settings.max === Infinity) {
-                     setupRulesEl.textContent = `Il Master deve inserire una parola con più di ${settings.min - 1} lettere.`;
-                }
-                showWordBtn.style.display = 'inline-block';
-                showScreen('setup');
+    const setDifficulty = (settings) => {
+        difficultySettings = settings;
+        if (isSinglePlayer) {
+            const validWords = wordList.filter(word => word.length >= settings.min && word.length <= settings.max);
+            if (validWords.length === 0) {
+                alert('Nessuna parola disponibile per questa difficoltà! Scegline un\'altra.');
+                showScreen('difficulty');
+                return;
             }
-        });
+            secretWord = validWords[Math.floor(Math.random() * validWords.length)];
+            resetGame();
+            showWordBtn.style.display = 'none';
+            showScreen('game');
+        } else {
+            setupRulesEl.textContent = `Il Master deve inserire una parola da ${settings.min} a ${settings.max} lettere.`;
+            if (settings.max === Infinity) {
+                 setupRulesEl.textContent = `Il Master deve inserire una parola con più di ${settings.min - 1} lettere.`;
+            }
+            showWordBtn.style.display = 'inline-block';
+            showScreen('setup');
+        }
     };
 
-    difficultyBeginnerBtn.addEventListener('click', (e) => setDifficulty(e, { min: 1, max: 4 }));
-    difficultyIntermediateBtn.addEventListener('click', (e) => setDifficulty(e, { min: 5, max: 6 }));
-    difficultyExpertBtn.addEventListener('click', (e) => setDifficulty(e, { min: 7, max: Infinity }));
+    difficultyBeginnerBtn.addEventListener('click', () => setDifficulty({ min: 1, max: 4 }));
+    difficultyIntermediateBtn.addEventListener('click', () => setDifficulty({ min: 5, max: 6 }));
+    difficultyExpertBtn.addEventListener('click', () => setDifficulty({ min: 7, max: Infinity }));
 
-    startGameBtn.addEventListener('click', (e) => {
+    startGameBtn.addEventListener('click', () => {
         const word = secretWordInput.value.trim().toUpperCase();
         const { min, max } = difficultySettings;
 
@@ -184,11 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        animateAndNavigate(e.currentTarget, () => {
-            secretWord = word;
-            resetGame();
-            showScreen('game');
-        });
+        secretWord = word;
+        resetGame();
+        showScreen('game');
     });
 
     // --- LOGICA DI GIOCO ---
@@ -234,12 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- NUOVA PARTITA ---
-    const startNewGame = (e) => {
-        animateAndNavigate(e.currentTarget, () => {
-            resetGame();
-            showScreen('modeSelection');
-        });
+    const startNewGame = () => {
+        resetGame();
+        showScreen('modeSelection');
     };
+    
     newGameWinBtn.addEventListener('click', startNewGame);
     newGameLoseBtn.addEventListener('click', startNewGame);
 
@@ -247,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openModal = () => helpModal.classList.add('show');
     const closeModal = () => helpModal.classList.remove('show');
 
-    tutorialBtn.addEventListener('click', openModal); // Rimosso l'effetto da qui per renderlo istantaneo
+    tutorialBtn.addEventListener('click', openModal);
     closeModalBtn.addEventListener('click', closeModal);
     closeTutorialBtn.addEventListener('click', closeModal);
     helpModal.addEventListener('click', (e) => {
@@ -265,5 +268,5 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Inizializza lo stato corretto della UI alla partenza
-    updateToolbar();
+    showScreen('home');
 });
