@@ -1,37 +1,33 @@
-const CACHE_NAME = 'stringi-la-parola-v1';
+const CACHE_NAME = 'stringi-la-parola-v2';
+// Lista dei file essenziali da salvare per il funzionamento offline
 const urlsToCache = [
     '/',
     'index.html',
     'style.css',
     'script.js',
-    'IMG_8383.png',
     'icon-192x192.png',
     'icon-512x512.png',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
+    'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js'
 ];
 
-// Evento di installazione: apre il cache e salva i file principali dell'app
+// Evento di installazione: apre la cache e salva i file
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                console.log('Cache aperto');
+                console.log('Cache aperto e file salvati');
                 return cache.addAll(urlsToCache);
             })
     );
 });
 
-// Evento fetch: intercetta le richieste di rete
+// Evento fetch: serve i file dalla cache se disponibili
 self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // Se la risorsa è in cache, la restituisce
-                if (response) {
-                    return response;
-                }
-                // Altrimenti, la richiede dalla rete
-                return fetch(event.request);
+                // Se la risorsa è in cache, la restituisce, altrimenti la cerca in rete
+                return response || fetch(event.request);
             })
     );
 });

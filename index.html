@@ -4,33 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stringi la Parola</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192x192.png">
+    <meta name="theme-color" content="#546A7B">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <main class="app-content">
-        <div id="actions-toolbar">
-            <button id="toolbar-back-btn" class="toolbar-btn">
-                <i class="fa-solid fa-arrow-left"></i>
-                <span>Indietro</span>
-            </button>
-            <button id="toolbar-surrender-btn" class="toolbar-btn">
-                <i class="fa-solid fa-flag"></i>
-                <span>Mi arrendo</span>
-            </button>
-        </div>
-
         <div class="game-container">
             
             <div id="home-screen" class="game-screen active">
                 <div class="screen-content">
-                    <div class="logo-container">s
-                        <img src="IMG_8383.png" alt="Logo Stringi la Parola" class="logo-image">
+                    <div class="logo">
+                        <i class="fa-solid fa-lightbulb-on"></i>
                     </div>
-                    <button id="go-to-mode-selection-btn">
+                    <h1 class="app-main-title">Stringi la Parola</h1>
+                    <button id="go-to-mode-selection-btn" class="btn btn-primary">
                         <i class="fa-solid fa-play"></i> Inizia a Giocare
                     </button>
                 </div>
@@ -38,14 +32,20 @@
 
             <div id="mode-selection-screen" class="game-screen">
                 <div class="screen-content">
-                    <button id="single-player-btn" class="btn-mode">
+                    <h2>Modalità di Gioco</h2>
+                    <button id="single-player-btn" class="btn btn-secondary">
                         <i class="fa-solid fa-user"></i> Giocatore Singolo
                     </button>
-                    <button id="multiplayer-btn" class="btn-mode">
+                    <button id="multiplayer-btn" class="btn btn-secondary">
                         <i class="fa-solid fa-users"></i> Multigiocatore
                     </button>
-                    <button id="tutorial-btn" class="btn-mode secondary">
-                        <i class="fa-solid fa-book-open"></i> Tutorial
+                    <button id="tutorial-btn" class="btn btn-secondary btn-subtle">
+                        <i class="fa-solid fa-book-open-reader"></i> Come si gioca?
+                    </button>
+                </div>
+                <div class="screen-footer">
+                    <button id="back-to-home-btn" class="btn btn-tertiary">
+                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
                     </button>
                 </div>
             </div>
@@ -53,111 +53,128 @@
             <div id="difficulty-screen" class="game-screen">
                 <div class="screen-content">
                     <h2>Scegli la difficoltà</h2>
-                    <button id="difficulty-beginner-btn" class="btn-mode">
-                        <i class="fa-solid fa-child"></i> Principiante
+                    <button id="difficulty-beginner-btn" class="btn btn-secondary">
+                        <i class="fa-solid fa-seedling"></i> Principiante
                     </button>
-                    <button id="difficulty-intermediate-btn" class="btn-mode">
-                        <i class="fa-solid fa-user-graduate"></i> Intermedio
+                    <button id="difficulty-intermediate-btn" class="btn btn-secondary">
+                        <i class="fa-solid fa-rocket-launch"></i> Intermedio
                     </button>
-                    <button id="difficulty-expert-btn" class="btn-mode">
-                        <i class="fa-solid fa-skull-crossbones"></i> Esperto
+                    <button id="difficulty-expert-btn" class="btn btn-secondary">
+                        <i class="fa-solid fa-crown"></i> Esperto
+                    </button>
+                </div>
+                 <div class="screen-footer">
+                    <button id="back-to-mode-btn" class="btn btn-tertiary">
+                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
                     </button>
                 </div>
             </div>
 
             <div id="setup-screen" class="game-screen">
-                <h2>Imposta il Gioco</h2>
-                <p id="setup-rules">Solo il Master può vedere questa sezione.</p>
-                <input type="password" id="secret-word-input" placeholder="Scrivi la parola segreta...">
-                <button id="start-game-btn">Inizia Partita</button>
+                <div class="screen-content">
+                    <h2>Imposta la Parola</h2>
+                    <p id="setup-rules">Il Master inserisce la parola.</p>
+                    <div class="input-group">
+                        <input type="password" id="secret-word-input" placeholder="Scrivi la parola segreta...">
+                    </div>
+                    <button id="start-game-btn" class="btn btn-primary">Inizia Partita</button>
+                </div>
+                 <div class="screen-footer">
+                    <button id="back-to-difficulty-setup-btn" class="btn btn-tertiary">
+                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
+                    </button>
+                </div>
             </div>
 
             <div id="game-screen" class="game-screen">
-                <h2>Indovinate!</h2>
                 <div id="game-status">
-                    <p>La parola segreta si trova tra:</p>
+                    <p>La parola è tra</p>
                     <div class="bounds">
-                        <span id="lower-bound">A</span>
-                        <span>e</span>
-                        <span id="upper-bound">Z</span>
+                        <div class="bound-box" id="lower-bound">A</div>
+                        <div class="bound-box" id="upper-bound">Z</div>
                     </div>
                 </div>
-                <div class="guess-form">
+                <div class="input-group">
                     <input type="text" id="guess-input" placeholder="Scrivi una parola...">
-                    <button id="submit-guess-btn">Indovina</button>
                 </div>
-                <h3>Tentativi Precedenti:</h3>
-                <ul id="guesses-list"></ul>
-                <button id="show-word-btn" class="secondary-btn">Master: Mostra Parola</button>
+                <button id="submit-guess-btn" class="btn btn-primary">Indovina</button>
+                <div class="guesses-container">
+                    <h3>Tentativi</h3>
+                    <ul id="guesses-list"></ul>
+                </div>
+                 <div class="screen-footer game-footer">
+                    <button id="back-to-difficulty-game-btn" class="btn btn-tertiary">
+                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
+                    </button>
+                    <button id="surrender-btn" class="btn btn-tertiary">
+                        <i class="fa-solid fa-flag"></i> Mi arrendo
+                    </button>
+                 </div>
+                 <button id="show-word-btn" class="btn btn-subtle">Mostra Parola (Master)</button>
             </div>
 
             <div id="game-over-win-screen" class="game-screen">
-                <h2>VITTORIA! <i class="fa-solid fa-trophy"></i></h2>
-                <p>Hai indovinato la parola segreta:</p>
-                <p id="final-word-win" class="final-word"></p>
-                <button id="new-game-win-btn">Gioca Ancora</button>
+                <div class="screen-content">
+                    <div class="result-icon win-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <h2>VITTORIA!</h2>
+                    <p>La parola era:</p>
+                    <p id="final-word-win" class="final-word"></p>
+                    <button id="new-game-win-btn" class="btn btn-primary">Gioca Ancora</button>
+                </div>
             </div>
 
             <div id="game-over-lose-screen" class="game-screen">
-                <h2>SCONFITTA! <i class="fa-regular fa-face-sad-tear"></i></h2>
-                <p>Ti sei arreso. La parola segreta era:</p>
-                <p id="final-word-lose" class="final-word"></p>
-                <button id="new-game-lose-btn">Riprova</button>
+                <div class="screen-content">
+                    <div class="result-icon lose-icon"><i class="fa-regular fa-face-sad-tear"></i></div>
+                    <h2>SCONFITTA</h2>
+                    <p>La parola segreta era:</p>
+                    <p id="final-word-lose" class="final-word"></p>
+                    <button id="new-game-lose-btn" class="btn btn-primary">Riprova</button>
+                </div>
             </div>
 
-        </div> </main> <div id="help-modal" class="modal-overlay">
+        </div>
+    </main>
+
+    <div id="help-modal" class="modal-overlay">
         <div class="modal-content">
-            <span id="modal-close-btn" class="modal-close">&times;</span>
-            <h2>Come si Gioca? 🤔</h2>
-            <p>L'obiettivo è indovinare una parola misteriosa sfruttando l'unica informazione che hai: l'**ordine alfabetico**!</p>
-            
-            <ol class="tutorial-list">
-                <li>
-                    <strong>La Parola Segreta</strong> 🤫<br>
-                    Una parola viene scelta (es. <strong>GATTO</strong>).
-                </li>
-                <li>
-                    <strong>Il Tuo Tentativo</strong> 🗣️<br>
-                    Fai una prova, per esempio con la parola <strong>CANE</strong>.
-                </li>
-                <li>
-                    <strong>L'Indizio Alfabetico</strong> 🔤<br>
-                    Il gioco confronta la tua parola con quella segreta. Poiché la 'G' di GATTO viene *dopo* la 'C' di CANE nell'alfabeto, l'indizio sarà: <strong>DOPO</strong>.
-                </li>
-                <li>
-                    <strong>Stringi il Campo</strong> 🎯<br>
-                    Ora sai che la parola è dopo CANE. Provi con <strong>MUCCA</strong>. La 'G' viene *prima* della 'M', quindi l'indizio sarà: <strong>PRIMA</strong>. Hai ristretto la ricerca: la parola è tra CANE e MUCCA!
-                </li>
-                 <li>
-                    <strong>Vittoria!</strong> 🏆<br>
-                    Continua a "stringere" il campo finché non trovi la parola esatta.
-                </li>
-            </ol>
-    
-            <h3 class="tutorial-heading"><i class="fa-solid fa-layer-group"></i> Livelli di Difficoltà</h3>
-            <ul class="difficulty-explanation">
-                <li><strong>Principiante:</strong> Parole corte, fino a un massimo di 4 lettere. Perfetto per iniziare!</li>
-                <li><strong>Intermedio:</strong> La sfida si fa interessante con parole di 5 o 6 lettere.</li>
-                <li><strong>Esperto:</strong> Solo per i più coraggiosi! Si gioca con parole che hanno 7 o più lettere.</li>
-            </ul>
-    
-            <button id="close-tutorial-btn" class="btn-mode"><i class="fa-solid fa-check"></i> Ho Capito!</button>
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-book-open-reader"></i> Come si Gioca?</h2>
+                <span id="modal-close-btn" class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>L'obiettivo è indovinare una parola misteriosa sfruttando l'unica informazione che hai: l'**ordine alfabetico**!</p>
+                <ol class="tutorial-list">
+                    <li><strong>La Parola Segreta</strong> 🤫<br>Una parola viene scelta (es. <strong>GATTO</strong>).</li>
+                    <li><strong>Il Tuo Tentativo</strong> 🗣️<br>Fai una prova, per esempio con la parola <strong>CANE</strong>.</li>
+                    <li><strong>L'Indizio Alfabetico</strong> 🔤<br>Il gioco confronta la tua parola con quella segreta. Poiché la 'G' di GATTO viene *dopo* la 'C' di CANE nell'alfabeto, l'indizio sarà: <strong>DOPO</strong>.</li>
+                    <li><strong>Stringi il Campo</strong> 🎯<br>Ora sai che la parola è dopo CANE. Provi con <strong>MUCCA</strong>. La 'G' viene *prima* della 'M', quindi l'indizio sarà: <strong>PRIMA</strong>. Hai ristretto la ricerca: la parola è tra CANE e MUCCA!</li>
+                    <li><strong>Vittoria!</strong> 🏆<br>Continua a "stringere" il campo finché non trovi la parola esatta.</li>
+                </ol>
+                <h3 class="tutorial-heading"><i class="fa-solid fa-layer-group"></i> Livelli di Difficoltà</h3>
+                <ul class="difficulty-explanation">
+                    <li><strong>Principiante:</strong> Parole corte, fino a 4 lettere.</li>
+                    <li><strong>Intermedio:</strong> Parole di 5 o 6 lettere.</li>
+                    <li><strong>Esperto:</strong> Parole con 7 o più lettere.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button id="close-tutorial-btn" class="btn btn-primary">Ho Capito!</button>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => {
-                    console.log('Service Worker registrato con successo:', registration);
-                })
-                .catch(error => {
-                    console.log('Registrazione Service Worker fallita:', error);
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('Service worker registrato.', reg);
+                }).catch(err => {
+                    console.error('Registrazione Service Worker fallita:', err);
                 });
-        });
-    }
-</script>
+            });
+        }
+    </script>
 </body>
 </html>

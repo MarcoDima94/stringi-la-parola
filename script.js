@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Contenitore principale
-    const gameContainer = document.querySelector('.game-container');
-
     // Schermate
     const screens = {
         home: document.getElementById('home-screen'),
@@ -13,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lose: document.getElementById('game-over-lose-screen'),
     };
 
-    // Pulsanti
+    // Pulsanti di navigazione
     const goToModeSelectionBtn = document.getElementById('go-to-mode-selection-btn');
     const singlePlayerBtn = document.getElementById('single-player-btn');
     const multiplayerBtn = document.getElementById('multiplayer-btn');
@@ -21,123 +18,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const difficultyBeginnerBtn = document.getElementById('difficulty-beginner-btn');
     const difficultyIntermediateBtn = document.getElementById('difficulty-intermediate-btn');
     const difficultyExpertBtn = document.getElementById('difficulty-expert-btn');
-    
-    // Toolbar
-    const toolbarBackBtn = document.getElementById('toolbar-back-btn');
-    const toolbarSurrenderBtn = document.getElementById('toolbar-surrender-btn');
+    const startGameBtn = document.getElementById('start-game-btn');
 
-    // Elementi di gioco e altri
+    // Pulsanti Indietro
+    const backToHomeBtn = document.getElementById('back-to-home-btn');
+    const backToModeBtn = document.getElementById('back-to-mode-btn');
+    const backToDifficultySetupBtn = document.getElementById('back-to-difficulty-setup-btn');
+    const backToDifficultyGameBtn = document.getElementById('back-to-difficulty-game-btn');
+
+    // Pulsanti di gioco
+    const surrenderBtn = document.getElementById('surrender-btn');
+    const submitGuessBtn = document.getElementById('submit-guess-btn');
+    const showWordBtn = document.getElementById('show-word-btn');
+    
+    // Elementi di gioco
     const setupRulesEl = document.getElementById('setup-rules');
     const secretWordInput = document.getElementById('secret-word-input');
-    const startGameBtn = document.getElementById('start-game-btn');
     const guessInput = document.getElementById('guess-input');
-    const submitGuessBtn = document.getElementById('submit-guess-btn');
     const guessesList = document.getElementById('guesses-list');
     const lowerBoundEl = document.getElementById('lower-bound');
     const upperBoundEl = document.getElementById('upper-bound');
-    const showWordBtn = document.getElementById('show-word-btn');
+
+    // Elementi Fine Gioco
     const finalWordWinEl = document.getElementById('final-word-win');
     const finalWordLoseEl = document.getElementById('final-word-lose');
     const newGameWinBtn = document.getElementById('new-game-win-btn');
     const newGameLoseBtn = document.getElementById('new-game-lose-btn');
+
+    // Modale
     const helpModal = document.getElementById('help-modal');
     const closeModalBtn = document.getElementById('modal-close-btn');
     const closeTutorialBtn = document.getElementById('close-tutorial-btn');
 
-    const wordList = [
-        // Parole Corte (Principiante)
-        "RE", "BLU", "THE", "SCI", "GAS", "GEL", "GIA", "SUA", "MIA", "NEI", "TRE",
-        "CASA", "CANE", "GATTO", "MANO", "PANE", "SALE", "SOLE", "LUNA", "MARE", "NEVE", 
-        "NASO", "NIDO", "MUSO", "RETE", "RISO", "UVA", "UOMO", "DONNA", "FUOCO", "FUMO",
-        "GIOCO", "GARA", "FILO", "DITO", "DADO", "CUBO", "CAVO", "ARCO", "ARTE", "ANNO", 
-        "MELA", "PERA", "FICO", "FAME", "SETE", "NOME", "FOTO", "VIDEO", "TEST", "QUIZ", 
-
-        // Parole Medie (Intermedio)
-        "LIBRO", "FIORE", "VENTO", "TRENO", "PORTA", "PESCE", "TEMPO", "TERRA", "AMICO",
-        "FORNO", "RADIO", "PIZZA", "PASTA", "PRATO", "PONTE", "PARCO", "PIEDE", "SALTO",
-        "SCALA", "SEDIA", "TAVOLO", "TETTO", "TORRE", "VETRO", "VOLPE", "ZEBRA",
-        "ALBERO", "BANANA", "BARCA", "BOSCO", "CAMPO", "CARTA", "CUORE", "FESTA",
-        "FORTE", "FRIGO", "GABBIA", "MAGLIA", "MUSICA", "NUVOLA", "OCCHI", "PIANTA", 
-        "SABBIA", "SCARPA", "SCUOLA", "STRADA", "TEATRO", "UOVO",
-
-        // Parole Lunghe (Esperto)
-        "ZAINO", "ZUCCHERO", "AEREO", "ANELLO", "ANGURIA", "ANIMALE", "ARMADIO",
-        "BAMBOLA", "BATTITO", "BOTTIGLIA", "BRACCIO", "CACCIA", "CALCIO", "CAMERA",
-        "CANDELA", "CAPELLI", "CASTELLO", "CERVELLO", "CHIAVE", "CHITARRA", "CIELO",
-        "CUCINA", "CUSCINO", "DIAMANTE", "FINESTRA", "FOGLIA", "FORMICA", "FRATELLO",
-    
-        "GIARDINO", "GIORNALE", "LAVAGNA", "LUCERTOLA", "MACCHINA", "MAGAZZINO",
-        "MAPPAMONDO", "MEDICINA", "MONTAGNA", "MOTORE", "MUSEO", "NEGOZIO",
-        "OSPEDALE", "OROLOGIO", "PALAZZO", "PANTERA", "PATATA", "PAVIMENTO",
-        "PENNARELLO", "PIANETA", "PIPISTRELLO", "PIRAMIDE", "PISTOLA", "POMODORO",
-        "QUADRO", "RAGNATELA", "REGALO", "SCATOLA", "SCRIVANIA", "SERPENTE",
-        "SPAZZOLA", "SPECCHIO", "SPIAGGIA", "STAZIONE", "TELEFONO", "TELEVISIONE",
-        "TEMPESTA", "TIGRE", "TRATTORE", "UNIVERSO", "VULCANO"
-    ];
+    const wordList = [ "RE", "BLU", "THE", "SCI", "GAS", "GEL", "CASA", "CANE", "GATTO", "MANO", "PANE", "SALE", "SOLE", "LUNA", "MARE", "NEVE", "NASO", "NIDO", "MUSO", "RETE", "RISO", "UVA", "UOMO", "DONNA", "FUOCO", "FUMO", "GIOCO", "GARA", "FILO", "DITO", "DADO", "CUBO", "CAVO", "ARCO", "ARTE", "ANNO", "MELA", "PERA", "FICO", "FAME", "SETE", "NOME", "FOTO", "VIDEO", "TEST", "QUIZ", "LIBRO", "FIORE", "VENTO", "TRENO", "PORTA", "PESCE", "TEMPO", "TERRA", "AMICO", "FORNO", "RADIO", "PIZZA", "PASTA", "PRATO", "PONTE", "PARCO", "PIEDE", "SALTO", "SCALA", "SEDIA", "TAVOLO", "TETTO", "TORRE", "VETRO", "VOLPE", "ZEBRA", "ALBERO", "BANANA", "BARCA", "BOSCO", "CAMPO", "CARTA", "CUORE", "FESTA", "FORTE", "FRIGO", "GABBIA", "MAGLIA", "MUSICA", "NUVOLA", "OCCHI", "PIANTA", "SABBIA", "SCARPA", "SCUOLA", "STRADA", "TEATRO", "UOVO", "ZAINO", "ZUCCHERO", "AEREO", "ANELLO", "ANGURIA", "ANIMALE", "ARMADIO", "BAMBOLA", "BATTITO", "BOTTIGLIA", "BRACCIO", "CACCIA", "CALCIO", "CAMERA", "CANDELA", "CAPELLI", "CASTELLO", "CERVELLO", "CHIAVE", "CHITARRA", "CIELO", "CUCINA", "CUSCINO", "DIAMANTE", "FINESTRA", "FOGLIA", "FORMICA", "FRATELLO", "GIARDINO", "GIORNALE", "LAVAGNA", "LUCERTOLA", "MACCHINA", "MAGAZZINO", "MAPPAMONDO", "MEDICINA", "MONTAGNA", "MOTORE", "MUSEO", "NEGOZIO", "OSPEDALE", "OROLOGIO", "PALAZZO", "PANTERA", "PATATA", "PAVIMENTO", "PENNARELLO", "PIANETA", "PIPISTRELLO", "PIRAMIDE", "PISTOLA", "POMODORO", "QUADRO", "RAGNATELA", "REGALO", "SCATOLA", "SCRIVANIA", "SERPENTE", "SPAZZOLA", "SPECCHIO", "SPIAGGIA", "STAZIONE", "TELEFONO", "TELEVISIONE", "TEMPESTA", "TIGRE", "TRATTORE", "UNIVERSO", "VULCANO"];
     
     // Variabili di stato
     let secretWord = '';
     let lowerBound = 'A';
     let upperBound = 'Z';
     let isSinglePlayer = false;
-    let activeScreenKey = 'home';
     let difficultySettings = {};
     
     // Funzione per mostrare le schermate
     const showScreen = (screenKey) => {
-        // Applica o rimuove lo stile trasparente al contenitore
-        if (screenKey === 'home') {
-            gameContainer.classList.add('is-home');
-        } else {
-            gameContainer.classList.remove('is-home');
-        }
-
-        // Nascondi tutte le schermate
         for (const key in screens) {
-            screens[key].classList.remove('active');
+            if (screens[key]) screens[key].classList.remove('active');
         }
-        // Mostra solo quella desiderata
-        screens[screenKey].classList.add('active');
+        if (screens[screenKey]) screens[screenKey].classList.add('active');
         
-        activeScreenKey = screenKey;
-        updateToolbar();
-    };
-
-    // Funzione per aggiornare la barra degli strumenti
-    const updateToolbar = () => {
-        toolbarBackBtn.classList.remove('visible');
-        toolbarSurrenderBtn.classList.remove('visible');
-
-        switch (activeScreenKey) {
-            case 'modeSelection':
-            case 'difficulty':
-            case 'setup':
-            case 'game':
-                toolbarBackBtn.classList.add('visible');
-                break;
-        }
-
-        if (activeScreenKey === 'game' && isSinglePlayer) {
-            toolbarSurrenderBtn.classList.add('visible');
-        }
+        // Gestisce visibilità dei pulsanti speciali
+        surrenderBtn.style.display = (screenKey === 'game' && isSinglePlayer) ? 'inline-flex' : 'none';
+        showWordBtn.style.display = (screenKey === 'game' && !isSinglePlayer) ? 'inline-flex' : 'none';
     };
     
     // --- NAVIGAZIONE ---
-    goToModeSelectionBtn.addEventListener('click', () => {
-        // **MODIFICA QUI: Aggiunto ritardo di 500ms (mezzo secondo)**
-        setTimeout(() => {
-            showScreen('modeSelection');
-        }, 500);
-    });
-    
-    toolbarBackBtn.addEventListener('click', () => {
-        switch (activeScreenKey) {
-            case 'modeSelection': showScreen('home'); break;
-            case 'difficulty': showScreen('modeSelection'); break;
-            case 'setup':
-            case 'game': showScreen('difficulty'); break;
-        }
-    });
+    goToModeSelectionBtn.addEventListener('click', () => showScreen('modeSelection'));
+    backToHomeBtn.addEventListener('click', () => showScreen('home'));
+    backToModeBtn.addEventListener('click', () => showScreen('modeSelection'));
+    backToDifficultySetupBtn.addEventListener('click', () => showScreen('difficulty'));
+    backToDifficultyGameBtn.addEventListener('click', () => showScreen('difficulty'));
 
     const handleModeSelection = (isSingle) => {
         isSinglePlayer = isSingle;
@@ -152,20 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isSinglePlayer) {
             const validWords = wordList.filter(word => word.length >= settings.min && word.length <= settings.max);
             if (validWords.length === 0) {
-                alert('Nessuna parola disponibile per questa difficoltà! Scegline un\'altra.');
-                showScreen('difficulty');
+                alert('Nessuna parola disponibile per questa difficoltà!');
                 return;
             }
             secretWord = validWords[Math.floor(Math.random() * validWords.length)];
             resetGame();
-            showWordBtn.style.display = 'none';
             showScreen('game');
         } else {
             setupRulesEl.textContent = `Il Master deve inserire una parola da ${settings.min} a ${settings.max} lettere.`;
             if (settings.max === Infinity) {
-                 setupRulesEl.textContent = `Il Master deve inserire una parola con più di ${settings.min - 1} lettere.`;
+                 setupRulesEl.textContent = `Il Master deve inserire una parola con ${settings.min} o più lettere.`;
             }
-            showWordBtn.style.display = 'inline-block';
             showScreen('setup');
         }
     };
@@ -211,13 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
             hint = 'Dopo <i class="fa-solid fa-arrow-right"></i>';
             if (guess > lowerBound) {
                 lowerBound = guess;
-                lowerBoundEl.textContent = `"${lowerBound}"`;
+                document.getElementById('lower-bound').textContent = `"${lowerBound}"`;
             }
         } else {
             hint = '<i class="fa-solid fa-arrow-left"></i> Prima';
             if (guess < upperBound || upperBound === 'Z') {
                 upperBound = guess;
-                upperBoundEl.textContent = `"${upperBound}"`;
+                document.getElementById('upper-bound').textContent = `"${upperBound}"`;
             }
         }
         const li = document.createElement('li');
@@ -232,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     showWordBtn.addEventListener('click', () => alert(`La parola segreta è: ${secretWord}`));
-    toolbarSurrenderBtn.addEventListener('click', () => {
+    surrenderBtn.addEventListener('click', () => {
         finalWordLoseEl.textContent = secretWord;
         showScreen('lose');
     });
@@ -261,12 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
         secretWordInput.value = '';
         guessInput.value = '';
         guessesList.innerHTML = '';
+        document.getElementById('lower-bound').textContent = 'A';
+        document.getElementById('upper-bound').textContent = 'Z';
         lowerBound = 'A';
         upperBound = 'Z';
-        lowerBoundEl.textContent = 'A';
-        upperBoundEl.textContent = 'Z';
     };
 
-    // Inizializza lo stato corretto della UI alla partenza
+    // Inizializza l'app
     showScreen('home');
 });
