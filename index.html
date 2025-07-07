@@ -139,23 +139,38 @@
     <div id="help-modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fa-solid fa-book-open-reader"></i> Come si Gioca?</h2>
+                <h2><i class="fa-solid fa-book-open-reader"></i> Come si Gioca: La Guida</h2>
                 <span id="modal-close-btn" class="modal-close">&times;</span>
             </div>
             <div class="modal-body">
-                <p>L'obiettivo è indovinare una parola misteriosa sfruttando l'unica informazione che hai: l'**ordine alfabetico**!</p>
+                <p>Benvenuto in <strong>Stringi la Parola</strong>! L'obiettivo è scoprire una parola misteriosa. Ad ogni tentativo, il gioco ti dirà un unico, fondamentale indizio: ti dirà se la parola segreta si trova <strong>PRIMA</strong> o <strong>DOPO</strong> la tua, in rigoroso ordine alfabetico.</p>
+            
+                <h3 class="tutorial-heading">La Schermata di Gioco</h3>
+                <p>Durante la partita, vedrai due "limiti" (all'inizio <strong>A</strong> e <strong>Z</strong>). Il tuo scopo è rendere questo intervallo sempre più piccolo, fino a isolare la parola segreta.</p>
+    
+                <h3 class="tutorial-heading">Esempio Pratico</h3>
+                <p>Immaginiamo che la parola segreta da indovinare sia <strong>MOTORE</strong>.</p>
                 <ol class="tutorial-list">
-                    <li><strong>La Parola Segreta</strong> 🤫<br>Una parola viene scelta (es. <strong>GATTO</strong>).</li>
-                    <li><strong>Il Tuo Tentativo</strong> 🗣️<br>Fai una prova, per esempio con la parola <strong>CANE</strong>.</li>
-                    <li><strong>L'Indizio Alfabetico</strong> 🔤<br>Il gioco confronta la tua parola con quella segreta. Poiché la 'G' di GATTO viene *dopo* la 'C' di CANE nell'alfabeto, l'indizio sarà: <strong>DOPO</strong>.</li>
-                    <li><strong>Stringi il Campo</strong> 🎯<br>Ora sai che la parola è dopo CANE. Provi con <strong>MUCCA</strong>. La 'G' viene *prima* della 'M', quindi l'indizio sarà: <strong>PRIMA</strong>. Hai ristretto la ricerca: la parola è tra CANE e MUCCA!</li>
-                    <li><strong>Vittoria!</strong> 🏆<br>Continua a "stringere" il campo finché non trovi la parola esatta.</li>
+                    <li>
+                        <strong>Tentativo 1:</strong> Provi con <strong>CANE</strong>.<br>
+                        La "M" di MOTORE viene <em>dopo</em> la "C" di CANE nell'alfabeto. L'indizio del gioco sarà: **DOPO**. Ora sai che la parola è compresa nell'intervallo tra **CANE** e **Z**. I limiti si sono stretti!
+                    </li>
+                    <li>
+                        <strong>Tentativo 2:</strong> Sai che la parola viene dopo CANE, quindi provi con una parola più avanti nell'alfabeto, ad esempio **TRENO**.<br>
+                        La "M" di MOTORE viene <em>prima</em> della "T" di TRENO. L'indizio sarà: **PRIMA**. Fantastico! Hai appena "stretto" l'intervallo in modo significativo. Ora sai che la parola segreta è tra **CANE** e **TRENO**.
+                    </li>
+                    <li>
+                        <strong>Tentativo 3:</strong> Cerchi una parola a metà strada, come **LUNA**.<br>
+                        La "M" di MOTORE viene <em>dopo</em> la "L" di LUNA. L'indizio sarà: **DOPO**. L'intervallo si restringe ancora di più! La parola ora è tra **LUNA** e **TRENO**.
+                    </li>
                 </ol>
-                <h3 class="tutorial-heading"><i class="fa-solid fa-layer-group"></i> Livelli di Difficoltà</h3>
+                <p>Continua ad usare questa logica per dimezzare le possibilità ad ogni tentativo finché non indovini la parola esatta!</p>
+    
+                <h3 class="tutorial-heading">Livelli di Difficoltà</h3>
                 <ul class="difficulty-explanation">
-                    <li><strong>Principiante:</strong> Parole corte, fino a 4 lettere.</li>
-                    <li><strong>Intermedio:</strong> Parole di 5 o 6 lettere.</li>
-                    <li><strong>Esperto:</strong> Parole con 7 o più lettere.</li>
+                    <li><strong>Principiante:</strong> Perfetto per imparare. Si gioca solo con parole corte (fino a 4 lettere).</li>
+                    <li><strong>Intermedio:</strong> La sfida si fa interessante. Le parole segrete hanno 5 o 6 lettere.</li>
+                    <li><strong>Esperto:</strong> Metti alla prova la tua abilità! Si gioca solo con parole lunghe (7 o più lettere).</li>
                 </ul>
             </div>
             <div class="modal-footer">
