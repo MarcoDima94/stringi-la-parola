@@ -4,28 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stringi la Parola</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192x192.png">
-    <meta name="theme-color" content="#546A7B">
-
     <script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/js/all.min.js"></script>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div id="global-profile-container">
+        <button id="profile-btn" class="btn btn-icon">
+            <i class="fa-solid fa-user-circle"></i>
+        </button>
+    </div>
+
     <main class="app-content">
         <div class="game-container">
             
+            <div id="login-screen" class="game-screen">
+                <div class="screen-content">
+                    <h2>Benvenuto!</h2>
+                    <p>Inserisci il tuo nome per iniziare</p>
+                    <div class="input-group">
+                        <input type="text" id="player-name-input" placeholder="Il tuo nome..." maxlength="15">
+                    </div>
+                    <button id="login-btn" class="btn btn-primary">Salva e Gioca</button>
+                </div>
+            </div>
+
             <div id="home-screen" class="game-screen active">
                 <div class="screen-content">
                     <div class="logo">
                         <i class="fa-solid fa-lightbulb-on"></i>
                     </div>
-                    <h1 class="app-main-title">Stringi la Parola</h1>
+                    <h1 id="home-player-name" class="app-main-title"></h1>
                     <button id="go-to-mode-selection-btn" class="btn btn-primary">
-                        <i class="fa-solid fa-play"></i> Inizia a Giocare
+                        <i class="fa-solid fa-play"></i> Gioca
+                    </button>
+                </div>
+            </div>
+
+            <div id="profile-screen" class="game-screen">
+                <div class="screen-content">
+                    <h2 id="profile-player-name">Nome Giocatore</h2>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Livello</span>
+                            <span id="profile-level" class="stat-value">1</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Punti Esperienza</span>
+                            <span id="profile-xp" class="stat-value">0 / 10</span>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="profile-progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+                <div class="screen-footer">
+                    <button id="back-to-home-from-profile-btn" class="btn btn-tertiary">
+                        <i class="fa-solid fa-arrow-left-long"></i> Torna alla Home
                     </button>
                 </div>
             </div>
@@ -33,40 +68,24 @@
             <div id="mode-selection-screen" class="game-screen">
                 <div class="screen-content">
                     <h2>Modalità di Gioco</h2>
-                    <button id="single-player-btn" class="btn btn-secondary">
-                        <i class="fa-solid fa-user"></i> Giocatore Singolo
-                    </button>
-                    <button id="multiplayer-btn" class="btn btn-secondary">
-                        <i class="fa-solid fa-users"></i> Multigiocatore
-                    </button>
-                    <button id="tutorial-btn" class="btn btn-secondary btn-subtle">
-                        <i class="fa-solid fa-book-open-reader"></i> Come si gioca?
-                    </button>
+                    <button id="single-player-btn" class="btn btn-secondary"><i class="fa-solid fa-user"></i> Giocatore Singolo</button>
+                    <button id="multiplayer-btn" class="btn btn-secondary"><i class="fa-solid fa-users"></i> Multigiocatore</button>
+                    <button id="tutorial-btn" class="btn btn-secondary btn-subtle"><i class="fa-solid fa-book-open-reader"></i> Come si gioca?</button>
                 </div>
                 <div class="screen-footer">
-                    <button id="back-to-home-btn" class="btn btn-tertiary">
-                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
-                    </button>
+                    <button id="back-to-home-btn" class="btn btn-tertiary"><i class="fa-solid fa-arrow-left-long"></i> Indietro</button>
                 </div>
             </div>
             
             <div id="difficulty-screen" class="game-screen">
                 <div class="screen-content">
                     <h2>Scegli la difficoltà</h2>
-                    <button id="difficulty-beginner-btn" class="btn btn-secondary">
-                        <i class="fa-solid fa-seedling"></i> Principiante
-                    </button>
-                    <button id="difficulty-intermediate-btn" class="btn btn-secondary">
-                        <i class="fa-solid fa-rocket-launch"></i> Intermedio
-                    </button>
-                    <button id="difficulty-expert-btn" class="btn btn-secondary">
-                        <i class="fa-solid fa-crown"></i> Esperto
-                    </button>
+                    <button id="difficulty-beginner-btn" class="btn btn-secondary"><i class="fa-solid fa-seedling"></i> Principiante</button>
+                    <button id="difficulty-intermediate-btn" class="btn btn-secondary"><i class="fa-solid fa-rocket-launch"></i> Intermedio</button>
+                    <button id="difficulty-expert-btn" class="btn btn-secondary"><i class="fa-solid fa-crown"></i> Esperto</button>
                 </div>
                  <div class="screen-footer">
-                    <button id="back-to-mode-btn" class="btn btn-tertiary">
-                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
-                    </button>
+                    <button id="back-to-mode-btn" class="btn btn-tertiary"><i class="fa-solid fa-arrow-left-long"></i> Indietro</button>
                 </div>
             </div>
 
@@ -80,9 +99,7 @@
                     <button id="start-game-btn" class="btn btn-primary">Inizia Partita</button>
                 </div>
                  <div class="screen-footer">
-                    <button id="back-to-difficulty-setup-btn" class="btn btn-tertiary">
-                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
-                    </button>
+                    <button id="back-to-difficulty-setup-btn" class="btn btn-tertiary"><i class="fa-solid fa-arrow-left-long"></i> Indietro</button>
                 </div>
             </div>
 
@@ -94,6 +111,7 @@
                         <div class="bound-box" id="upper-bound">Z</div>
                     </div>
                 </div>
+                <div id="hint-display" class="hint-display-box"></div>
                 <div class="input-group">
                     <input type="text" id="guess-input" placeholder="Scrivi una parola...">
                 </div>
@@ -103,14 +121,24 @@
                     <ul id="guesses-list"></ul>
                 </div>
                  <div class="screen-footer game-footer">
-                    <button id="back-to-difficulty-game-btn" class="btn btn-tertiary">
-                        <i class="fa-solid fa-arrow-left-long"></i> Indietro
-                    </button>
-                    <button id="surrender-btn" class="btn btn-tertiary">
-                        <i class="fa-solid fa-flag"></i> Mi arrendo
-                    </button>
+                    <button id="back-to-difficulty-game-btn" class="btn btn-tertiary"><i class="fa-solid fa-arrow-left-long"></i> Indietro</button>
+                    <button id="help-btn" class="btn btn-tertiary"><i class="fa-solid fa-lightbulb-question"></i> Aiuto</button>
+                    <button id="surrender-btn" class="btn btn-tertiary"><i class="fa-solid fa-flag"></i> Mi arrendo</button>
                  </div>
                  <button id="show-word-btn" class="btn btn-subtle">Mostra Parola (Master)</button>
+            </div>
+            
+            <div id="progress-screen" class="game-screen">
+                <div class="screen-content">
+                    <h2>Partita Terminata!</h2>
+                    <p>Hai guadagnato <strong class="xp-gain">+5 Punti</strong></p>
+                    <div id="level-up-animation" class="level-up-text">LEVEL UP!</div>
+                    <div class="progress-bar-container">
+                        <div id="post-game-progress-bar" class="progress-bar"></div>
+                    </div>
+                    <span id="post-game-xp" class="stat-value">5 / 10</span>
+                    <button id="continue-btn" class="btn btn-primary">Continua</button>
+                </div>
             </div>
 
             <div id="game-over-win-screen" class="game-screen">
@@ -119,7 +147,7 @@
                     <h2>VITTORIA!</h2>
                     <p>La parola era:</p>
                     <p id="final-word-win" class="final-word"></p>
-                    <button id="new-game-win-btn" class="btn btn-primary">Gioca Ancora</button>
+                    <button id="new-game-win-btn" class="btn btn-primary">Guarda i progressi</button>
                 </div>
             </div>
 
@@ -144,28 +172,16 @@
             </div>
             <div class="modal-body">
                 <p>Benvenuto in <strong>Stringi la Parola</strong>! L'obiettivo è scoprire una parola misteriosa. Ad ogni tentativo, il gioco ti dirà un unico, fondamentale indizio: ti dirà se la parola segreta si trova <strong>PRIMA</strong> o <strong>DOPO</strong> la tua, in rigoroso ordine alfabetico.</p>
-            
                 <h3 class="tutorial-heading">La Schermata di Gioco</h3>
                 <p>Durante la partita, vedrai due "limiti" (all'inizio <strong>A</strong> e <strong>Z</strong>). Il tuo scopo è rendere questo intervallo sempre più piccolo, fino a isolare la parola segreta.</p>
-    
                 <h3 class="tutorial-heading">Esempio Pratico</h3>
                 <p>Immaginiamo che la parola segreta da indovinare sia <strong>MOTORE</strong>.</p>
                 <ol class="tutorial-list">
-                    <li>
-                        <strong>Tentativo 1:</strong> Provi con <strong>CANE</strong>.<br>
-                        La "M" di MOTORE viene <em>dopo</em> la "C" di CANE nell'alfabeto. L'indizio del gioco sarà: **DOPO**. Ora sai che la parola è compresa nell'intervallo tra **CANE** e **Z**. I limiti si sono stretti!
-                    </li>
-                    <li>
-                        <strong>Tentativo 2:</strong> Sai che la parola viene dopo CANE, quindi provi con una parola più avanti nell'alfabeto, ad esempio **TRENO**.<br>
-                        La "M" di MOTORE viene <em>prima</em> della "T" di TRENO. L'indizio sarà: **PRIMA**. Fantastico! Hai appena "stretto" l'intervallo in modo significativo. Ora sai che la parola segreta è tra **CANE** e **TRENO**.
-                    </li>
-                    <li>
-                        <strong>Tentativo 3:</strong> Cerchi una parola a metà strada, come **LUNA**.<br>
-                        La "M" di MOTORE viene <em>dopo</em> la "L" di LUNA. L'indizio sarà: **DOPO**. L'intervallo si restringe ancora di più! La parola ora è tra **LUNA** e **TRENO**.
-                    </li>
+                    <li><strong>Tentativo 1:</strong> Provi con <strong>CANE</strong>.<br>La "M" di MOTORE viene <em>dopo</em> la "C" di CANE. L'indizio sarà: **DOPO**. L'intervallo ora è tra **CANE** e **Z**.</li>
+                    <li><strong>Tentativo 2:</strong> Provi con <strong>TRENO</strong>.<br>La "M" di MOTORE viene <em>prima</em> della "T" di TRENO. L'indizio sarà: **PRIMA**. L'intervallo ora è tra **CANE** e **TRENO**.</li>
+                    <li><strong>Tentativo 3:</strong> Provi con <strong>LUNA</strong>.<br>La "M" di MOTORE viene <em>dopo</em> la "L" di LUNA. L'indizio sarà: **DOPO**. L'intervallo ora è tra **LUNA** e **TRENO**.</li>
                 </ol>
                 <p>Continua ad usare questa logica per dimezzare le possibilità ad ogni tentativo finché non indovini la parola esatta!</p>
-    
                 <h3 class="tutorial-heading">Livelli di Difficoltà</h3>
                 <ul class="difficulty-explanation">
                     <li><strong>Principiante:</strong> Perfetto per imparare. Si gioca solo con parole corte (fino a 4 lettere).</li>
@@ -178,18 +194,23 @@
             </div>
         </div>
     </div>
+    
+    <div id="hint-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-lightbulb-question"></i> Chiedi un Aiuto</h2>
+                <span id="hint-modal-close-btn" class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Hai a disposizione <strong id="hint-token-count">0</strong> gettoni.</p>
+                <p>Vuoi usarne uno per rivelare una lettera a caso della parola segreta?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="use-hint-btn" class="btn btn-primary">Sì, usa 1 gettone</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').then(reg => {
-                    console.log('Service worker registrato.', reg);
-                }).catch(err => {
-                    console.error('Registrazione Service Worker fallita:', err);
-                });
-            });
-        }
-    </script>
 </body>
 </html>
